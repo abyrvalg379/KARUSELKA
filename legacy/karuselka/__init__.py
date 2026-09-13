@@ -1,7 +1,7 @@
 bl_info = {
     "name": "KARUSELKA",
     "author": "Maksim Kovalev",
-    "version": (1, 4, 0),
+    "version": (1, 4, 1),
     "blender": (3, 6, 0),
     "location": "View3D > Sidebar (N) > KARUSELKA",
     "description": "Turntable rig: camera orbit or object spin, linear keyframes + animation render",
@@ -440,6 +440,32 @@ def _safe_filename(name):
     return cleaned or "turntable"
 
 
+def _apply_output_format(scene, fmt):
+    """Output format preset -> render media settings. Blender 5.2 moved
+    video output into image_settings.media_type (assigning
+    file_format='FFMPEG' raises TypeError there); older builds still
+    select video via file_format."""
+    imf = scene.render.image_settings
+    video = fmt != 'PNG'
+    if video:
+        if hasattr(imf, "media_type"):
+            imf.media_type = 'VIDEO'
+        else:
+            imf.file_format = 'FFMPEG'
+        ff = scene.render.ffmpeg
+        if fmt == 'MP4':
+            ff.format = 'MPEG4'
+            ff.codec = 'H264'
+        else:
+            ff.format = 'WEBM'
+            ff.codec = 'WEBM'
+        ff.audio_codec = 'NONE'
+    else:
+        if hasattr(imf, "media_type"):
+            imf.media_type = 'IMAGE'
+        imf.file_format = 'PNG'
+
+
 def _apply_samples(scene, preset):
     """Quality preset -> active engine samples. Scene/K-Cycles safe: only
     touches properties that exist."""
@@ -850,18 +876,7 @@ class KR_OT_render_turntable(Operator):
         asset = _project_name() or _scope_name(props)
         scene.render.filepath = out + _safe_filename(asset) + "_turntable"
 
-        image_settings = scene.render.image_settings
-        if props.format == 'PNG':
-            image_settings.file_format = 'PNG'
-        else:
-            image_settings.file_format = 'FFMPEG'
-            if props.format == 'MP4':
-                scene.render.ffmpeg.format = 'MPEG4'
-                scene.render.ffmpeg.codec = 'H264'
-            else:
-                scene.render.ffmpeg.format = 'WEBM'
-                scene.render.ffmpeg.codec = 'WEBM'
-            scene.render.ffmpeg.audio_codec = 'NONE'
+        _apply_output_format(scene, props.format)
 
         if not any(o.type == 'LIGHT' for o in scene.objects):
             self.report({'WARNING'}, "No lights in the scene — "

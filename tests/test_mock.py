@@ -975,6 +975,31 @@ check("safe filename sanitizes",
       ns["_safe_filename"]('A:B/C*D') == 'A_B_C_D'
       and ns["_safe_filename"]("  ") == "turntable")
 
+# ------------------------------------------------- media API (Blender 5.2+)
+# 5.2 moved video into image_settings.media_type; file_format='FFMPEG'
+# raises there. The old-API path is covered by the operator tests above.
+new_imf = types.SimpleNamespace(media_type='IMAGE', file_format='PNG')
+new_scene = types.SimpleNamespace(
+    render=types.SimpleNamespace(
+        image_settings=new_imf,
+        ffmpeg=types.SimpleNamespace(format='MPEG4', codec='H264',
+                                     audio_codec='NONE')))
+ns["_apply_output_format"](new_scene, 'MP4')
+check("media api 5.2: mp4", new_imf.media_type == 'VIDEO'
+      and new_imf.file_format == 'PNG'
+      and new_scene.render.ffmpeg.format == 'MPEG4'
+      and new_scene.render.ffmpeg.codec == 'H264',
+      (new_imf.media_type, new_scene.render.ffmpeg.format))
+ns["_apply_output_format"](new_scene, 'WEBM')
+check("media api 5.2: webm", new_imf.media_type == 'VIDEO'
+      and new_scene.render.ffmpeg.format == 'WEBM'
+      and new_scene.render.ffmpeg.codec == 'WEBM',
+      (new_imf.media_type, new_scene.render.ffmpeg.format))
+ns["_apply_output_format"](new_scene, 'PNG')
+check("media api 5.2: png back", new_imf.media_type == 'IMAGE'
+      and new_imf.file_format == 'PNG',
+      (new_imf.media_type, new_imf.file_format))
+
 # ---------------------------------------------------------------- slotted actions
 # Blender 4.4+ slotted actions: no Action.fcurves, walk layers/strips/channelbags
 legacy_action = types.SimpleNamespace(fcurves=FakeFCurves())
