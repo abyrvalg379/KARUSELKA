@@ -58,6 +58,8 @@ light preset + KARUSELKA turntable = model showcase in two minutes.
 
 ## Install
 
+Download `karuselka_extension.zip` (Blender 4.2+) or `karuselka_legacy.zip` (3.6–4.1) from the [latest release](https://github.com/abyrvalg379/karuselka/releases/latest).
+
 - Blender 4.2+ — Edit > Preferences > Add-ons > Install from Disk (arrow menu)
   > `karuselka_extension.zip`
 - Blender 3.6 – 4.1 — same dialog, `karuselka_legacy.zip`

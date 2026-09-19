@@ -58,6 +58,8 @@
 
 ## Установка
 
+Скачайте `karuselka_extension.zip` (Blender 4.2+) или `karuselka_legacy.zip` (3.6–4.1) со страницы [последнего релиза](https://github.com/abyrvalg379/karuselka/releases/latest).
+
 - Blender 4.2+ — Edit > Preferences > Add-ons > Install from Disk (меню-стрелка)
   > `karuselka_extension.zip`
 - Blender 3.6 – 4.1 — тот же диалог, `karuselka_legacy.zip`
