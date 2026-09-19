@@ -1,6 +1,6 @@
 # KARUSELKA
 
-*Readme in English: [README.md](README.md)*
+*English documentation: [README.md](README.md)*
 
 Быстрый турнтейбл-риг для Blender 3.6+ / 4.2+ / 5.x. Выберите объект, нажмите **Create Rig** —
 камера летает по орбите на линейных кейфреймах, готова к скрабу и рендеру
