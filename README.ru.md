@@ -10,10 +10,6 @@
 
 **Blender 3.6+ / 4.2+ · Автор: Maksim Kovalev**
 
-| | |
-|---|---|
-| ![Турнтейбл](docs/img/karuselka_orbit.gif) | **Create Rig** — один клик: камера летит по орбите на линейных кейфреймах, готова к скрабу и рендеру |
-
 Работает в паре с [LAMPOCHKA](https://github.com/abyrvalg379/lampochka):
 пресет света + турнтейбл KARUSELKA = шоурил модели за две минуты.
 

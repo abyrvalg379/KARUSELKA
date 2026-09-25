@@ -10,10 +10,6 @@ turntable.
 
 **Blender 3.6+ / 4.2+ · Author: Maksim Kovalev**
 
-| | |
-|---|---|
-| ![Turntable](docs/img/karuselka_orbit.gif) | **Create Rig** — one click: the camera orbits the asset on linear keyframes, ready to scrub or render |
-
 Pairs with [LAMPOCHKA](https://github.com/abyrvalg379/lampochka):
 light preset + KARUSELKA turntable = model showcase in two minutes.
 
